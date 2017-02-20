@@ -12,6 +12,7 @@ EpivizData <- setRefClass("EpivizData",
     .mgr="EpivizDataMgrOrNULL",
     .id="character",
     .name="character",
+    .source_name="character",
     .columns="ANY",
     .ylim="ANY",
     .cur_query="ANY",
@@ -105,6 +106,7 @@ EpivizData <- setRefClass("EpivizData",
       .self$.id <- id
       invisible()
     },
+    
     # TODO: use accessor functions for this
     get_name = function() { 
       "Get datasource name, usually set by manager \\code{\\link{EpivizDataMgr-class}}"
@@ -115,6 +117,18 @@ EpivizData <- setRefClass("EpivizData",
       .self$.name <- name
       invisible()
     },
+    
+    # TODO: use accessor functions for this
+    get_source_name = function() {
+      "Get original datasource name provided by manager \\code{\\link{EpivizDataMgr-class}}"
+      .self$.source_name
+    },
+    set_source_name = function(source_name) {
+      "Set original datasource name, used by manager \\code{\\link{EpivizDataMgr-class}}"
+      .self$.source_name <- source_name
+      invisible()
+    },
+    
     set_limits = function(ylim) {
       "Set plotting limits for continuous data"
       if (!.self$.check_limits(ylim))

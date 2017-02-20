@@ -64,8 +64,9 @@ EpivizDataMgr$methods(
   },
   add_measurements = function(obj, datasource_name=NULL, send_request = TRUE, ...) {
     "register measurements in data manager"
+    datasource_obj_name <- deparse(substitute(obj))
     if (missing(datasource_name) || is.null(datasource_name)) {
-      datasource_name = deparse(substitute(obj))
+      datasource_name <- datasource_obj_name
     }
     
     if (!is.character(datasource_name)) {
@@ -77,11 +78,14 @@ EpivizDataMgr$methods(
     ms_id <- sprintf("%s_%d", datasource_name, .self$.ms_idCounter)
     ms_object$set_id(ms_id)
     ms_object$set_name(datasource_name)
+    ms_object$set_source_name(datasource_obj_name)
     ms_object$set_mgr(.self)
     
     measurements <- ms_object$get_measurements()
+    
     ms_record <- list(measurements=measurements,
                       name=datasource_name, 
+                      source_name=datasource_obj_name,
                       obj=ms_object, 
                       connected=FALSE)
     assign(ms_id, ms_record, envir=.self$.ms_list)
