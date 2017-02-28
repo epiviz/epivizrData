@@ -77,7 +77,7 @@ EpivizDataMgr$methods(
     ms_id <- sprintf("%s_%d", datasource_name, .self$.ms_idCounter)
     ms_object$set_id(ms_id)
     ms_object$set_name(datasource_name)
-    ms_object$set_source_name(datasource_obj_name)
+    ms_object$set_source_name(datasource_origin_name)
     ms_object$set_mgr(.self)
     
     measurements <- ms_object$get_measurements()
