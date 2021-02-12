@@ -13,7 +13,7 @@
 \usage{
 register(object, columns = NULL, ...)
 
-\S4method{register}{GenomicRanges}(object, columns, type = c("block", "bp", "gene_info"), ...)
+\S4method{register}{GenomicRanges}(object, columns, type = c("block", "bp", "tx_info", "gene_info"), ...)
 
 \S4method{register}{RangedSummarizedExperiment}(object, columns = NULL, assay = 1, metadata = NULL)
 
