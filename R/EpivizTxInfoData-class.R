@@ -1,7 +1,7 @@
 #' Container for transcript annotation data
 #'
-#' Used to serve data to gene annotation tracks. Wraps \code{\link{GenomicRanges}} objects.
-#' Annotation obtained from columns \code{Gene} (gene symbols) and \code{Exons} (exon start and end locations).
+#' Used to serve data to transcript annotation tracks. Wraps \code{\link{GenomicRanges}} objects.
+#' Annotation obtained from columns \code{Transcript} (transcript_id) \code{Gene} (gene symbols) and \code{Exons} (exon start and end locations).
 #'
 #' @docType class
 #' @seealso EpivizData
