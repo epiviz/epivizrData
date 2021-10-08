@@ -1,7 +1,7 @@
 Package: epivizrData
 Type: Package
 Title: Data Management API for epiviz interactive visualization app
-Version: 1.15.1
+Version: 1.19.1
 Authors@R: c( person("Hector", "Corrada Bravo", 
                       email = "hcorrada@gmail.com", 
                       role = c("aut", "cre")), 
@@ -23,7 +23,8 @@ Imports: S4Vectors, GenomicRanges, SummarizedExperiment (>= 0.2.0),
         OrganismDbi, GenomicFeatures, GenomeInfoDb, IRanges, ensembldb
 Suggests: testthat, roxygen2, bumphunter, hgu133plus2.db, Mus.musculus,
         TxDb.Mmusculus.UCSC.mm10.knownGene, rjson, knitr, rmarkdown, BiocStyle,
-        EnsDb.Mmusculus.v79, AnnotationHub, rtracklayer, utils, RMySQL, DBI
+        EnsDb.Mmusculus.v79, AnnotationHub, rtracklayer, utils, RMySQL, DBI,
+        matrixStats
 License: MIT + file LICENSE
 LazyData: true
 RoxygenNote: 7.1.1

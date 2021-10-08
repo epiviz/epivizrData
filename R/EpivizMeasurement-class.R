@@ -71,7 +71,7 @@ setMethod("show", signature(object="EpivizMeasurement"),
 
 setMethod(".appendEpivizMeasurement", "EpivizMeasurement",
           function(a, b) {
-            nms <- slotNames("SparseEpivizMeasurement")
+            nms <- slotNames("EpivizMeasurement")
             for (nm in nms) {
               cur_val <- slot(b, nm)
               if (is.list(slot(a, nm))) {

@@ -1,5 +1,7 @@
 context("update measurement")
 
+source("helper-makeEset.R")
+
 test_that("update block works", {
   gr1 <- GRanges(seqnames="chr1", ranges=IRanges::IRanges(start=1:10, width=1))
   gr2 <- GRanges(seqnames="chr12", ranges=IRanges::IRanges(start=1:1000,width=10))

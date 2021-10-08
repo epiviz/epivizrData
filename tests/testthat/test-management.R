@@ -1,5 +1,8 @@
 context("measurement management")
 
+source("helper-organismdb.R")
+source("helper-makeEset.R")
+
 test_that("add measurement works without datasource_name", {
   server <- epivizrServer::createServer()
   mgr <- createMgr(server)
@@ -24,18 +27,20 @@ test_that("add measurement works without connection", {
   rngs <- unname(sapply(c("A","B"), function(col) range(pretty(range(assay(se,"counts2")[,col], na.rm=TRUE)))))
   exp_ms <- lapply(c("A","B"), function(col) {
     i <- match(col,c("A","B"))
-    list(id=col,
+    list(
          name=col,
          type="feature",
-         datasourceId=ms_id,
          datasourceGroup=ms_id,
-         datasourceName=ms_name,
          defaultChartType="ScatterPlot",
          dataprovider=character(),
          annotation=list(Treatment=as.character(colData(se)[i,])),
          minValue=rngs[1,i],
          maxValue=rngs[2,i],
-         metadata=c("probeid"))
+         metadata=c("probeid"),
+         id=col,
+         datasourceId=ms_id,
+         datasourceName=ms_name
+         )
   })
   
   ms_record <- mgr$.ms_list[[ms_id]]
@@ -54,7 +59,7 @@ test_that("get_measurements works without connection", {
   eset <- make_test_eset()
   
   server <- epivizrServer::createServer()
-  mgr <- createMgr(server)
+  mgr <- epivizrData::createMgr(server)
   
   msObj1 <- mgr$add_measurements(gr1, "dev1", send_request=FALSE); msId1=msObj1$get_id(); msName1=msObj1$get_source_name()
   msObj2 <- mgr$add_measurements(gr2, "dev2", send_request=FALSE); msId2=msObj2$get_id(); msName2=msObj2$get_source_name()
@@ -67,12 +72,10 @@ test_that("get_measurements works without connection", {
   res <- mgr$get_measurements()
     
   expMs <- list(
-      id=c(msId1, msId2, "score", paste0("SAMP_",1:2)),
+      
       name=c("dev1", "dev2", "score", paste0("SAMP_",1:2)),
       type=c(rep("range", 2), rep("feature",3)),
-      datasourceId=c(msId1, msId2, msId3, rep(msId4,2)),
       datasourceGroup=c(msId1, msId2, msId3, rep(msId4,2)),
-      datasourceName=c(msName1, msName2, msName3, rep(msName4, 2)),
       defaultChartType=c(rep("BlocksTrack", 2), "LineTrack", rep("ScatterPlot",2)),
       annotation=c(rep(list(NULL),3), 
                    lapply(1:2, function(i) 
@@ -80,7 +83,10 @@ test_that("get_measurements works without connection", {
                           b=as.character(pData(eset)[i,2])))),
       minValue=c(rep(NA,2), rngs3[1], rngs4[1,]),
       maxValue=c(rep(NA,2), rngs3[2], rngs4[2,]),
-      metadata=c(list(NULL), list(NULL), list(NULL), lapply(1:2,function(i) c("PROBEID","SYMBOL")))
+      metadata=c(list(NULL), list(NULL), list(NULL), lapply(1:2,function(i) c("PROBEID","SYMBOL"))),
+      id=c(msId1, msId2, "score", paste0("SAMP_",1:2)),
+      datasourceId=c(msId1, msId2, msId3, rep(msId4,2)),
+      datasourceName=c(msName1, msName2, msName3, rep(msName4, 2))
     )
     
   for (entry in names(expMs)) {

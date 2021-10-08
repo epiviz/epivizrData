@@ -1,5 +1,8 @@
 context("data fetch")
 
+source("helper-organismdb.R")
+source("helper-makeEset.R")
+
 test_that("block data fetch works", {
   gr <- GRanges(seqnames="chr1", ranges=IRanges::IRanges(start=1:10, width=1),
                  seqinfo=Seqinfo(seqnames="chr1",genome="hcb"))

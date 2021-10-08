@@ -1,5 +1,8 @@
 context("get_measurements from data objects")
 
+source("helper-organismdb.R")
+source("helper-makeEset.R")
+
 test_that("get_measurements works for blocks", {
   gr <- GRanges(seqnames="chr1", ranges=IRanges::IRanges(start=1:10, width=1))
   ms_obj <- epivizrData::register(gr)
@@ -9,18 +12,19 @@ test_that("get_measurements works for blocks", {
 
   exp_ms <- list(
     list(
-      id = ms_id,
       name = ms_obj$.name,
       type = "range",
-      datasourceId = ms_id,
       datasourceGroup = ms_id,
-      datasourceName = ms_name,
       defaultChartType = "BlocksTrack",
       dataprovider = character(),
       annotation = NULL,
       minValue = as.numeric(NA),
       maxValue = as.numeric(NA),
-      metadata = NULL)
+      metadata = NULL,
+      id = ms_id,
+      datasourceId = ms_id,
+      datasourceName = ms_name
+      )
   )
   obs <- lapply(ms, as.list)
   expect_equal(obs, exp_ms)
@@ -37,18 +41,19 @@ test_that("get_measurements works for bp", {
     
   exp_ms <- lapply(1:2, function(i) {
       list(
-        id=paste0("score",i),
         name=paste0("score",i),
         type="feature",
-        datasourceId=ms_id,
         datasourceGroup=ms_id,
-        datasourceName=ms_name,
         defaultChartType="LineTrack",
         dataprovider=character(),
         annotation=NULL,
         minValue=rngs[1,i],
         maxValue=rngs[2,i],
-        metadata=NULL)
+        metadata=NULL,
+        id=paste0("score",i),
+        datasourceId=ms_id,
+        datasourceName=ms_name
+        )
   })
 
   obs_ms <- ms_obj$get_measurements()
@@ -66,18 +71,19 @@ test_that("get_measurements works for RangedSummarizedExperiment", {
   exp_ms <- lapply(c("A","B"), function(col) {
       i <- match(col,c("A","B"))
       list(
-        id=col,
         name=col,
         type="feature",
-        datasourceId=ms_id,
         datasourceGroup=ms_id,
-        datasourceName=ms_name,
         defaultChartType="ScatterPlot",
         dataprovider=character(),
         annotation=list(Treatment=as.character(colData(sset)[i,])),
         minValue=rngs[1,i],
         maxValue=rngs[2,i],
-        metadata=c("probeid"))
+        metadata=c("probeid"),
+        id=col,
+        datasourceId=ms_id,
+        datasourceName=ms_name
+        )
     })
 
   obs_ms <- ms_obj$get_measurements()
@@ -95,19 +101,21 @@ test_that("get_measurements works for ExpressionSet", {
   rngs <- sapply(1:2, function(i) range(pretty(range(exprs(eset)[,paste0("SAMP_",i)]))))
     
   exp_ms <- lapply(1:2, function(i) {
-    list(id=paste0("SAMP_",i),
+    list(
       name=paste0("SAMP_",i),
       type="feature",
-      datasourceId=ms_id,
       datasourceGroup=ms_id,
-      datasourceName=ms_name,
       defaultChartType="ScatterPlot",
       dataprovider=character(),
       annotation=list(a=as.character(pData(eset)[i,1]), 
                       b=as.character(pData(eset)[i,2])),
       minValue=rngs[1,i],
       maxValue=rngs[2,i],
-      metadata=c("PROBEID","SYMBOL"))
+      metadata=c("PROBEID","SYMBOL"),
+      id=paste0("SAMP_",i),
+      datasourceId=ms_id,
+      datasourceName=ms_name
+      )
   })
 
   obs_ms <- ms_obj$get_measurements()
@@ -121,19 +129,24 @@ test_that("get_measurements works for gene info gr", {
   ms_id <- ms_obj$get_id()
   ms_name <- ms_obj$get_source_name()
   
-  exp_ms <- list(list(id=ms_id,
+  exp_ms <- list(list(
                  name=ms_obj$.name,
                  type = "range",
-                 datasourceId = ms_id,
                  datasourceGroup = ms_id,
-                 datasourceName = ms_name,
                  defaultChartType = "GenesTrack",
                  dataprovider=character(),
                  annotation = NULL,
                  minValue = as.numeric(NA),
                  maxValue = as.numeric(NA),
-                 metadata = c("gene", "exon_starts", "exon_ends")))
+                 metadata = c("gene", "exon_starts", "exon_ends"),
+                 id=ms_id,
+                 datasourceId = ms_id,
+                 datasourceName = ms_name
+                )
+            )
   obs_ms <- ms_obj$get_measurements()
-  expect_equal(lapply(obs_ms, as.list), exp_ms)
+  obs_tst <- lapply(obs_ms, as.list)
+  obs_tst
+  expect_equal(obs_tst, exp_ms)
 })
 
