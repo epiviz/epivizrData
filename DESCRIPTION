@@ -1,7 +1,7 @@
 Package: epivizrData
 Type: Package
 Title: Data Management API for epiviz interactive visualization app
-Version: 1.19.1
+Version: 1.20
 Authors@R: c( person("Hector", "Corrada Bravo", 
                       email = "hcorrada@gmail.com", 
                       role = c("aut", "cre")), 
