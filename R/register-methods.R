@@ -87,7 +87,7 @@ setMethod("coerceIfNeeded", "RangedSummarizedExperiment",
 #' @import GenomicRanges
 #' @param type Which type of data object to register for a \code{\link{GenomicRanges}} object. \code{block}: only region data, \code{bp} base-pair resolution quantitative data (see \code{columns} argument), \code{geneInfo} information about gene location.
 setMethod("register", "GenomicRanges",
-          function(object, columns, type=c("block","bp","tx_info","gene_info"), ...) {
+          function(object, columns, type=c("block","bp","tx_info","gene_info", "guide_info"), ...) {
             type <- match.arg(type)
             object <- reorderIfNeeded(object)
             object <- coerceIfNeeded(object)
@@ -96,7 +96,8 @@ setMethod("register", "GenomicRanges",
                           block = EpivizBlockData$new(object=object, ...),
                           bp = EpivizBpData$new(object=object, columns=columns, ...),
                           tx_info = EpivizTxInfoData$new(object=object, ...),
-                          gene_info = EpivizGeneInfoData$new(object=object, ...)
+                          gene_info = EpivizGeneInfoData$new(object=object, ...),
+                          guide_info = EpivizGuideInfoData$new(object=object,...),
             )
             return(dev)
           })

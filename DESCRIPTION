@@ -28,10 +28,12 @@ Suggests: testthat, roxygen2, bumphunter, hgu133plus2.db, Mus.musculus,
 License: MIT + file LICENSE
 LazyData: true
 RoxygenNote: 7.1.1
-Collate: 'epivizrData-package.R' 'SparseEpivizMeasurement-class.R' 'EpivizMeasurement-class.R' 'EpivizDataMgr-class.R' 'createMgr.R'
+Collate: 'epivizrData-package.R' 'SparseEpivizMeasurement-class.R' 
+        'EpivizMeasurement-class.R' 'EpivizDataMgr-class.R' 'createMgr.R'
         'EpivizData-class.R' 'EpivizTrackData-class.R'
         'EpivizBlockData-class.R' 'EpivizBpData-class.R'
-        'EpivizGeneInfoData-class.R' 'EpivizTxInfoData-class.R' 'EpivizFeatureData-class.R'
+        'EpivizGeneInfoData-class.R' 'EpivizTxInfoData-class.R' 
+        'EpivizFeatureData-class.R' 'EpivizGuideInfoData-class.R'
         'make_gene_info_gr.R' 'register-methods.R' 'utils.R'
 VignetteBuilder: knitr
 NeedsCompilation: no
