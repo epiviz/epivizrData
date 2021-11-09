@@ -28,6 +28,15 @@ EpivizGuideInfoData <- setRefClass("EpivizGuideInfoData",
 
 EpivizGuideInfoData$methods(
   get_default_chart_type = function() { "GuideTrack" },
+  get_rows=function(query, metadata) {
+    out <- callSuper(query, metadata)
+    if (length(.self$.cur_hits) == 0) {
+      return(out)
+    }
+    
+    out$values$strand <- as.character(strand(.self$.object)[.self$.cur_hits])
+    out
+  },
   .get_metadata=function(cur_hits, cur_metadata) {
     if (length(cur_hits) == 0) {
       out <- lapply(cur_metadata, function(x) list())
@@ -39,10 +48,10 @@ EpivizGuideInfoData$methods(
     for (col in cur_metadata) {
       cur_out <- switch(col,
                         ID=as.character(.self$.object$ID[cur_hits]),
-                        pam_site=as.character(.self$.object$pam_site[cur_hits]),
+                        pam_site=.self$.object$pam_site[cur_hits],
                         spacer_20mer=as.character(.self$.object$spacer_20mer[cur_hits]),
                         pam=as.character(.self$.object$pam[cur_hits]),
-                        cut_site=as.character(.self$.object$cut_site[cur_hits]),
+                        cut_site=.self$.object$cut_site[cur_hits],
                         nuclease=as.character(.self$.object$nuclease[cur_hits])
                         )
       out[[col]] <- cur_out

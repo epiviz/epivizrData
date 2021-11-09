@@ -27,7 +27,7 @@ Suggests: testthat, roxygen2, bumphunter, hgu133plus2.db, Mus.musculus,
         matrixStats
 License: MIT + file LICENSE
 LazyData: true
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2
 Collate: 'epivizrData-package.R' 'SparseEpivizMeasurement-class.R' 
         'EpivizMeasurement-class.R' 'EpivizDataMgr-class.R' 'createMgr.R'
         'EpivizData-class.R' 'EpivizTrackData-class.R'
